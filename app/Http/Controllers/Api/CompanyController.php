@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
+use App\Http\Resources\CompanyResource;
 use App\Repositories\CompanyRepositoryInterface;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -18,60 +21,59 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = $this->companyRepository->all();
-        return response()->json($companies);
+        return CompanyResource::collection($companies);
     }
 
     public function show($id)
     {
-        $company = $this->companyRepository->find($id);
-        
-        if ($company) {
-            return response()->json($company);
-        }
-        
-        return response()->json(['message' => 'Company not found'], 404);
+        $company = $this->companyRepository->findCompanyOrFail($id);
+
+        return new CompanyResource($company);
     }
 
-    public function store(Request $request)
+    public function store(StoreCompanyRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email',
-            'logo_path' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'website' => 'nullable|url',
-        ]);
+        $data = $request->validated();
+
+        if ($request->hasFile('logo_path')) {
+            $path = $request->file('logo_path')->store('logos', 'public');
+            $data['logo_path'] = $path;
+        }
 
         $company = $this->companyRepository->create($data);
 
-        return response()->json($company, 201);
+        return new CompanyResource($company);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCompanyRequest $request, $id)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email',
-            'logo_path' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'website' => 'nullable|url',
-        ]);
+        $data = $request->validated();
+
+        if ($request->hasFile('logo_path')) {
+            $company = $this->companyRepository->findCompanyOrFail($id);
+            if ($company && $company->logo_path) {
+                Storage::disk('public')->delete($company->logo_path);
+            }
+
+            $path = $request->file('logo_path')->store('logos', 'public');
+            $data['logo_path'] = $path;
+        }
 
         $company = $this->companyRepository->update($id, $data);
 
-        if ($company) {
-            return response()->json($company);
-        }
-
-        return response()->json(['message' => 'Company not found'], 404);
+        return new CompanyResource($company);
     }
 
     public function destroy($id)
     {
-        $deleted = $this->companyRepository->delete($id);
+        $company = $this->companyRepository->findCompanyOrFail($id);
 
-        if ($deleted) {
-            return response()->json(['message' => 'Company successfully deleted']);
+        if ($company->logo_path) {
+            Storage::disk('public')->delete($company->logo_path);
         }
 
-        return response()->json(['message' => 'Company not found'], 404);
+        $this->companyRepository->delete($id);
+
+        return response()->json(['message' => __('messages.company_deleted')]);
     }
 }

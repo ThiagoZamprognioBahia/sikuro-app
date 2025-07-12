@@ -123,4 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'token_name' => env('TOKEN_NAME', env('APP_NAME', 'DefaultApp')),
 ];

@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Company;
 use App\Repositories\CompanyRepositoryInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CompanyRepository implements CompanyRepositoryInterface
 {
@@ -34,5 +35,16 @@ class CompanyRepository implements CompanyRepositoryInterface
     {
         $company = Company::findOrFail($id);
         return $company->delete();
+    }
+
+    public function findCompanyOrFail($id)
+    {
+        $company = Company::find($id);
+
+        if (!$company) {
+            throw new NotFoundHttpException(__('messages.company_not_found'));
+        }
+
+        return $company;
     }
 }
