@@ -20,7 +20,8 @@ class CompanyController extends Controller
 
     public function index()
     {
-        $companies = $this->companyRepository->all();
+        $companies = $this->companyRepository->paginate(10);
+        
         return CompanyResource::collection($companies);
     }
 

@@ -15,7 +15,7 @@ class CompanyRepository implements CompanyRepositoryInterface
 
     public function find($id)
     {
-        return Company::findOrFail($id);
+        return Company::find($id);
     }
 
     public function create(array $data)
@@ -25,7 +25,7 @@ class CompanyRepository implements CompanyRepositoryInterface
 
     public function update($id, array $data)
     {
-        $company = Company::findOrFail($id);
+        $company = Company::findCompanyOrFail($id);
         $company->update($data);
 
         return $company;
@@ -33,7 +33,7 @@ class CompanyRepository implements CompanyRepositoryInterface
 
     public function delete($id)
     {
-        $company = Company::findOrFail($id);
+        $company = Company::findCompanyOrFail($id);
         return $company->delete();
     }
 
@@ -46,5 +46,10 @@ class CompanyRepository implements CompanyRepositoryInterface
         }
 
         return $company;
+    }
+
+    public function paginate($perPage = 10)
+    {
+        return Company::paginate($perPage);
     }
 }

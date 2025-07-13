@@ -15,4 +15,6 @@ interface CompanyRepositoryInterface
     public function delete($id);
     
     public function findCompanyOrFail($id);
+
+    public function paginate($perPage = 10);
 }
