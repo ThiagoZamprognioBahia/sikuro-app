@@ -68,13 +68,15 @@ This API uses **Sanctum** for authentication. Add the Bearer token to the reques
 Follow the steps below to set up and run the Sikuro API on your local machine:
 
 ### 📥 Clone the Repository
-
+``
 git clone https://github.com/ThiagoZamprognioBahia/sikuro-app
 cd sikuro-app
+``
 
 ## 📦 Install Dependencies
-
+``
 composer install
+``
 
 ## ⚙️ Configure the Environment
 
@@ -91,12 +93,12 @@ DB_PASSWORD=your_database_password
 ```
 
 ## 🗃️ Run Migrations & Seeders
-
+``
 php artisan serve
-
+``
 # 🧪 Running Tests
-
+``
 php artisan test
-
+``
 
 
