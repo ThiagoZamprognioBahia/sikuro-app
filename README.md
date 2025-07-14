@@ -91,7 +91,7 @@ DB_DATABASE=your_database_name
 DB_USERNAME=your_database_user
 DB_PASSWORD=your_database_password
 ```
-# use to create the seeder/system admin user
+### :rotating_light: use to create the seeder/system admin user
 ```
 ADMIN_EMAIL=admin@admin.com
 ADMIN_PASSWORD=password
