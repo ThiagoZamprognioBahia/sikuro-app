@@ -24,9 +24,14 @@ class UpdateCompanyRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'name.string' => __('messages.name_string'),
+            'name.max' => __('messages.name_max'),
+            'email.email' => __('messages.email_address'),
+            'email.unique' => __('messages.company_email_unique'),
             'logo_path.dimensions' => __('messages.logo_path_dimensions'),
             'logo_path.image' => __('messages.logo_path_image'),
             'logo_path.max' => __('messages.logo_path_max'),
+            'website.url' => __('messages.website_url'),
         ];
     }
 }

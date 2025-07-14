@@ -25,7 +25,7 @@ class CompanyRepository implements CompanyRepositoryInterface
 
     public function update($id, array $data)
     {
-        $company = Company::findCompanyOrFail($id);
+        $company = $this->findCompanyOrFail($id);
         $company->update($data);
 
         return $company;
@@ -33,7 +33,7 @@ class CompanyRepository implements CompanyRepositoryInterface
 
     public function delete($id)
     {
-        $company = Company::findCompanyOrFail($id);
+        $company = $this->findCompanyOrFail($id);
         return $company->delete();
     }
 

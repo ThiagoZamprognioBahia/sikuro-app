@@ -14,5 +14,5 @@ Route::post('login', AuthController::class . '@login');
 
 Route::middleware(['auth:sanctum', 'can:is-admin'])->group(function () {
     Route::apiResource('companies', CompanyController::class);
-    Route::apiResource('employee', EmployeeController::class);
+    Route::apiResource('employees', EmployeeController::class);
 });

@@ -34,7 +34,7 @@ class StoreEmployeeRequest extends FormRequest
             'company_id.required' => __('messages.company_id_required'),
             'company_id.exists' => __('messages.company_id_exists'),
             'email.email' => __('messages.email_address'),
-            'email.unique' => __('messages.email_unique'),
+            'email.unique' => __('messages.employee_email_unique'),
             'phone.string' => __('messages.phone_string'),
             'phone.phone' => __('messages.phone_country'),
         ];
