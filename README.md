@@ -92,6 +92,10 @@ DB_USERNAME=your_database_user
 DB_PASSWORD=your_database_password
 ```
 
+## :closed_lock_with_key: Generate the application key:
+``
+php artisan key:generate
+``
 ## 🗃️ Run Migrations & Seeders
 ``
 php artisan serve
