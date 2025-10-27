@@ -23,7 +23,7 @@ class EmployeeTest extends TestCase
             'last_name' => 'Zamprognio',
             'company_id' => $company->id,
             'email' => 'Thiago@teste.com',
-            'phone' => '+1202-555-0198',
+            'phone' => '3100215240',
         ]);
 
         $response->assertStatus(201);
@@ -96,7 +96,7 @@ class EmployeeTest extends TestCase
             'last_name' => 'Name',
             'company_id' => $employee->company_id,
             'email' => 'updated@email.com',
-            'phone' => '+1202-555-0198',
+            'phone' => '3100215240',
         ]);
 
         $response->assertStatus(200);
